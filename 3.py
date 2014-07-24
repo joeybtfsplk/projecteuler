@@ -10,13 +10,21 @@ purp: The prime factors of 13195 are 5, 7, 13 and 29. What is the largest
 """
 
 def main():
-    n = 600851475143 
-    i = 2
-    while i * i < n:
-        while n % i == 0:
-            n = n / i
-        i += 1
-    print (n)
+    """
+    Make test_factor equal to the lowest prime (2).
+    While the square of the test_factor is < than the number:
+        while the number mod test_factor equals 0:
+            divide the number by test_factor and use that number
+        add one to the test_factor
+    Upon exit test_factor equals the largest prime or equals the number
+    """
+    num = 600851475143 
+    test_factor = 2
+    while (test_factor * test_factor) < num:
+        while num % test_factor == 0:
+            num = num / test_factor
+        test_factor += 1
+    print (num)
     return
 
 if __name__ == "__main__":

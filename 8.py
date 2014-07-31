@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-file: 7.py
+file: 8.py
 date: Wed Jul 30 19:55:08 EDT 2014
 from: Project Euler: http://projecteuler.net
 auth: tls

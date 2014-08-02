@@ -78,20 +78,35 @@ def set_up_matrix():
     matrix.append(row)
     return matrix
 
+def product( iterable ):
+    """
+    Return the product of all the elements in the  list.
+    """
+    p= 1
+    for n in iterable:
+        p *= n
+    return p
+
 def max2right(row,span=2):
-    print row
-    prod= 0
+    """
+    Return the maximum product of the series of elements span long.
+    """
+    maximum= 0
     offset= span - 1
-    for i in range(0,len(row)-offset,offset):
+    for i in range(0,len(row)-offset,1):
+        # take out after dev done
         print row[i:i+span]
-    return prod
+        ans= product(row[i:i+span])
+        maximum = ans if ans > maximum else maximum
+    return maximum
 
 def main():
     """
     """
     matrix= set_up_matrix()
     print matrix
-    print max2right(matrix[0])
+    for i in range(0,len(matrix)):
+        print max2right(matrix[i],2)
     return 0
 
 if __name__ == "__main__":

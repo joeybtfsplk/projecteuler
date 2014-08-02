@@ -6,32 +6,35 @@ from: Project Euler: http://projecteuler.net
 auth: tls
 purp: The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17. Find the sum of 
       all the primes below two million.
-      Ans: 142913828922 on Fri Aug  1 19:15:40 EDT 2014
+      Ans: 142913828922 on Fri Aug  1 22:34:07 EDT 2014
 """
 def prime_list(num):
     """
     From: http://en.wikibooks.org/wiki/Efficient_Prime_Number_Generating_
     Algorithms
-    Modified: tls, fixed so entering 10 did not return 11 in the list of primes.
     Return primes up to but not including num.
+    Acts goofy below 20.
     """
-    num= int(num)
-    if num <= 2:
-        return []
-    tp= [2]    # fills up with primes
-    pp= 3        # potential primes
-    while pp < num:
-        test= True
-        sqrtpp= int(pp**0.5)
+    from math  import sqrt
+    pp=2
+    ep=[pp]
+    pp+=1
+    tp=[pp]
+    ss=[2]
+    #lim=raw_input("\nGenerate prime numbers up to what number? : ")
+    lim= int(num)
+    while pp<int(lim):
+        pp+=ss[0]
+        test=True
+        sqrtpp=sqrt(pp)
         for a in tp:
-            if a > sqrtpp: # can be no more compoents from here on
-                break
-            if pp % a == 0:# well, it's divisible by something
-                test= False
-                break
-        if test: 
-            tp.append(pp)
-        pp += 2
+            if a>sqrtpp: break
+            if pp%a==0:
+               test=False
+               break
+        if test: tp.append(pp)
+    ep.reverse()
+    [tp.insert(0,a) for a in ep]
     return tp
 
 def main():
@@ -39,7 +42,7 @@ def main():
     """
     num= 2000000
     ans= prime_list(num)
-    print("Sum of primes from 2 to %d: %d" % (num, sum(ans)))
+    print("Sum of primes found between 2 and %d: %d" % (num, sum(ans)))
     print("Found a total of %d primes." % len(ans))
     if len(ans) <= 6:
         print("Primes: %s" % str(ans))

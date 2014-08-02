@@ -61,13 +61,13 @@ def to_int(row):
 
 def set_up_matrix():
     matrix= []
-    row= "1 2 3 4 5"
+    row= "1 9 3 4 5"
     row= to_int(row)
     matrix.append(row)
-    row= "2 3 4 5 6"
+    row= "2 30 4 5 6"
     row= to_int(row)
     matrix.append(row)
-    row= "3 4 5 6 7"
+    row= "3 8 5 6 7"
     row= to_int(row)
     matrix.append(row)
     row= "4 5 6 7 8"
@@ -87,7 +87,7 @@ def product( iterable ):
         p *= n
     return p
 
-def max2right(row,span=2):
+def maxinrow(row,span=2):
     """
     Return the maximum product of the series of elements span long.
     """
@@ -100,13 +100,30 @@ def max2right(row,span=2):
         maximum = ans if ans > maximum else maximum
     return maximum
 
+def maxofrows(matrix,span=2):
+    maximum= 0
+    for i in range(0,len(matrix)):
+        #print maxinrow(matrix[i],span)
+        ans= maxinrow(matrix[i],span)
+        maximum = ans if ans > maximum else maximum
+    return maximum
+
 def main():
     """
     """
+    span= 2
     matrix= set_up_matrix()
     print matrix
-    for i in range(0,len(matrix)):
-        print max2right(matrix[i],2)
+    maximum= 0
+    #print maxofrows(matrix)
+    ans= maxofrows(matrix,span)
+    maximum = ans if ans > maximum else maximum
+    print maximum   # maximum value along the rows
+    matrixT= zip(matrix[0],matrix[1],matrix[2],matrix[3],matrix[4])
+    print matrixT
+    ans= maxofrows(matrixT,span)
+    maximum = ans if ans > maximum else maximum
+    print maximum   # maximum value along rows and columns
     return 0
 
 if __name__ == "__main__":

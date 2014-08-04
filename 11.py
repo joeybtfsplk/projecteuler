@@ -167,8 +167,6 @@ def maxdiagl2r(matrix,span=2):
     Return maximum product found.
     """
     print("start across columns")
-    for i in matrix:
-        print i
     maximum= 0
     end= len(matrix)
     start= 0
@@ -185,9 +183,11 @@ def maxdiagl2r(matrix,span=2):
         start += 1
     print("start down rows")
     end= len(matrix)
-    rowstep= 0
+    rowstep= 0  # start at row one even tho did it above
     col= 0
     start= 0
+    for r in range(0,len(matrix)):
+        print matrix[r]
     while not ((len(matrix) - start) < span):
         row= []
         col= 0
@@ -203,11 +203,34 @@ def maxdiagl2r(matrix,span=2):
         start += 1
     return maximum
 
+def maxdiagr2l(matrix,span=2):
+    """
+    Get ur to ll diag moving backwards across top row.
+    Then get ur to ll diag moving down right column.
+    Return maximum product found.
+    """
+    print("start backwards across columns")
+    maximum= 0
+    end= len(matrix)
+    start= 0
+    col = len(matrix)- 1
+    while not ((len(matrix) - start) < span):
+        row= []
+        for r in range(0,end):
+            row.append(matrix[r][col-r])
+        print "> ", row
+        ans= maxinrow(row,span)
+        maximum = ans if ans > maximum else maximum
+        col -= 1
+        end -= 1
+        start += 1
+    return maximum
+
 def main():
     """
     First solve problem using a 5x5 matrix.
     """
-    span= 4
+    span= 2
     matrix= set_up_matrix()
     print matrix
     maximum= 0
@@ -235,7 +258,9 @@ def main():
     # now go from ...
     ans= maxdiagl2r(matrix,span)
     print ans
-    return 0
+    maximum = ans if ans > maximum else maximum
+    print maximum
+    # above code seems to work on 5 matrix problem
     # Now go from upper right to lower left getting rows looking for maximum.
     ans= maxdiagr2l(matrix)
     return 0

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 file: 11.py
-date: 
+date: Sun Aug  3 21:37:03 EDT 2014
 from: Project Euler: http://projecteuler.net
 auth: tls
 purp: In the 20x20 grid below, four numbers along a diagonal line have been marked in red.
@@ -28,7 +28,7 @@ purp: In the 20x20 grid below, four numbers along a diagonal line have been mark
     The product of these numbers is 26 x 63 x 78 x 14 = 1788696.
     What is the greatest product of four adjacent numbers in the same direction
     (up, down, left, right, or diagonally) in the 20x20 grid?
-    Ans: 
+    Ans: 70600674 on Sun Aug  3 21:36:53 EDT 2014
 """
 def xset_up_matrix():
     matrix= []
@@ -143,7 +143,6 @@ def maxinrow(row,span=2):
     maximum= 0
     offset= span - 1
     for i in range(0,len(row)-offset,1):
-        # take out after dev done
         print row[i:i+span]
         ans= product(row[i:i+span])
         maximum = ans if ans > maximum else maximum
@@ -155,7 +154,6 @@ def maxofrows(matrix,span=2):
     """
     maximum= 0
     for i in range(0,len(matrix)):
-        #print maxinrow(matrix[i],span)
         ans= maxinrow(matrix[i],span)
         maximum = ans if ans > maximum else maximum
     return maximum
@@ -175,7 +173,7 @@ def maxdiagl2r(matrix,span=2):
         row= []
         for r in range(0,end):
             row.append(matrix[r][r+ col])
-        print "> ", row
+        #print "> ", row
         ans= maxinrow(row,span)
         maximum = ans if ans > maximum else maximum
         col += 1
@@ -199,7 +197,6 @@ def maxdiagl2r(matrix,span=2):
         ans= maxinrow(row,span)
         maximum = ans if ans > maximum else maximum
         rowstep += 1
-        #end -= 1
         start += 1
     return maximum
 
@@ -224,45 +221,48 @@ def maxdiagr2l(matrix,span=2):
         col -= 1
         end -= 1
         start += 1
+    print("start down rows on right side")
+    end= len(matrix)
+    rowstep= 0  # start at row one even tho did it above
+    col= len(matrix) - 1
+    start= 0
+    for r in range(0,len(matrix)):
+        print matrix[r]
+    while not ((len(matrix) - start) < span):
+        row= []
+        col= len(matrix) - 1
+        for r in range(rowstep,end):
+            #print("r= %d, col= %d, end= %d" % (r, col, end))
+            row.append(matrix[r][col])
+            col -= 1
+        print "> ", row
+        ans= maxinrow(row,span)
+        maximum = ans if ans > maximum else maximum
+        rowstep += 1
+        start += 1
     return maximum
 
 def main():
     """
-    First solve problem using a 5x5 matrix.
     """
-    span= 2
-    matrix= set_up_matrix()
+    span= 4
+    matrix= xset_up_matrix()
     print matrix
     maximum= 0
-    #print maxofrows(matrix)
     ans= maxofrows(matrix,span)
     maximum = ans if ans > maximum else maximum
     print maximum   # maximum value along the rows
-
     # transpose columns to rows and call maxofrows again
     matrixT= zip(matrix[0],matrix[1],matrix[2],matrix[3],matrix[4])
-    #matrixT= zip(matrix[0],matrix[1],matrix[2],matrix[3],matrix[4],matrix[5],matrix[6],matrix[7],\
-    #matrix[8],matrix[9],matrix[10],matrix[11],matrix[12],matrix[13],matrix[14],matrix[15],matrix[16],\
-    #matrix[17],matrix[18],matrix[19])
-    print matrixT
     ans= maxofrows(matrixT,span)
     maximum = ans if ans > maximum else maximum
-    print maximum   # maximum value along rows and columns
-
     # now work on going diagonally from upper left to lower  right
-    # create a row from the longest diagonal
-    # process it for maximum value
-    # move to next column starting at row 0 and get a row from that diagonal
-    # stop moving to the right when span will be greater than the elements in
-    # the row to be newly created.
-    # now go from ...
     ans= maxdiagl2r(matrix,span)
-    print ans
     maximum = ans if ans > maximum else maximum
-    print maximum
-    # above code seems to work on 5 matrix problem
     # Now go from upper right to lower left getting rows looking for maximum.
-    ans= maxdiagr2l(matrix)
+    ans= maxdiagr2l(matrix,span)
+    maximum = ans if ans > maximum else maximum
+    print("Maximum= %d" %  maximum)
     return 0
 
 if __name__ == "__main__":

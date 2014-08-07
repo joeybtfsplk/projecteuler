@@ -1,4 +1,4 @@
 projecteuler
 ============
 
-Project Euler Problems in Python
+> My solution in Python to some Project Euler Problems
